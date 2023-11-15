@@ -54,7 +54,6 @@
 #include "gpio_utils.h"
 #include "adc_utils.h"
 #include "i2c_utils.h"
-#include "adc16_utils.h"
 #include "pwm_utils.h"
 
 const scpi_command_t scpi_commands[] = {
@@ -67,7 +66,6 @@ const scpi_command_t scpi_commands[] = {
     INSTRUMENT_DIGI_INP_COMMANDS
     // adc commands
     INSTRUMENT_ANA_INP_COMMANDS
-    INSTRUMENT_ANA_HIRES_INP_COMMANDS
     // pwm commands
     INSTRUMENT_ANA_OUTP_COMMANDS
 
@@ -84,7 +82,6 @@ void initInstrument() {
     initI2CUtils();
     initAdcUtils();
     initAdcPins();
-    initAdc16Reg();
     initPwmUtils();
     initPwmPins();
 }

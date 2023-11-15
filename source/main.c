@@ -23,6 +23,17 @@
  *
  */
 
+/* Scheduler include files. */
+#include "FreeRTOS.h"
+#include "task.h"
+
+
+/* Library includes. */
+#if ( mainRUN_ON_CORE == 1 )
+#include "pico/multicore.h"
+#endif
+
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -35,6 +46,8 @@
 
 #include "scpi-def.h"
 #include "scpi/scpi_base.h"
+
+void vApplicationTickHook( void );
 
 
 /*------------- MAIN -------------*/
@@ -58,3 +71,6 @@ int main(void)
   return 0;
 }
 
+void vApplicationTickHook( void )
+{
+}
