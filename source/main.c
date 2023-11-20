@@ -66,7 +66,6 @@ static void led_blinky_cb(TimerHandle_t xTimer);
 static void usb_device_task(void *param);
 static void maintain_registers_task(void *param);
 
-/*------------- MAIN -------------*/
 int main(void) {
 	TaskHandle_t xHandle;
 
@@ -82,7 +81,7 @@ int main(void) {
 
   xTimerStart(blinky_tm, 0);
   vTaskStartScheduler();
-
+  panic_unsupported(); // should never reach here
   return 0;
 }
 
@@ -98,7 +97,7 @@ static void usb_device_task(void *param) {
   tud_init(BOARD_TUD_RHPORT);
 
   // RTOS forever loop
-  while (1) {
+  for( ;; ) {
     // put this thread to waiting state until there is new events
     tud_task();
     usbtmc_app_task_iter();

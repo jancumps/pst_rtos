@@ -9,7 +9,7 @@ Pico C SDK 1.5
 FreeRTOS Kernel
 
 Clone the repository with its subrepositories, to get the application, the Pico SCPI USBTMC_LabLib (PSL) sources, and the Jan Breuer SCPI library:  
-git clone https://github.com/jancumps/pico_scpi_usbtmc_labtool.git  --recurse-submodules  
+git clone https://github.com/jancumps/pst_rtos --recurse-submodules  
 
 Add this variable to your environment:  
 
