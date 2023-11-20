@@ -41,7 +41,6 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}/source/adc
         ${CMAKE_CURRENT_LIST_DIR}/source/i2c
         ${CMAKE_CURRENT_LIST_DIR}/source/pwm
-        ${CMAKE_CURRENT_LIST_DIR}/source/freertos
 )
 
 pico_set_program_name(${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_NAME})
