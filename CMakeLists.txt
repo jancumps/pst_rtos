@@ -30,7 +30,7 @@ add_executable(${CMAKE_PROJECT_NAME}
         ${CMAKE_CURRENT_SOURCE_DIR}/source/adc/adc_utils.c
         ${CMAKE_CURRENT_SOURCE_DIR}/source/i2c/i2c_utils.c
         ${CMAKE_CURRENT_SOURCE_DIR}/source/pwm/pwm_utils.c
-        ${CMAKE_CURRENT_SOURCE_DIR}/source/freertos_hook.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/source/freertos/freertos_hook.c
         )
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
@@ -41,6 +41,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}/source/adc
         ${CMAKE_CURRENT_LIST_DIR}/source/i2c
         ${CMAKE_CURRENT_LIST_DIR}/source/pwm
+        ${CMAKE_CURRENT_LIST_DIR}/source/freertos
 )
 
 pico_set_program_name(${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_NAME})
