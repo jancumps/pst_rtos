@@ -1,44 +1,24 @@
 cmake_minimum_required(VERSION 3.17)
 
-# set(PICO_DEOPTIMIZED_DEBUG 1)
+cmake_minimum_required(VERSION 3.13)
 
-# Pull in SDK (must be before project)
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+
+
+# Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
 # Pull in FreeRTOS
 include(FreeRTOS_Kernel_import.cmake)
 
-project(pico_scpi_usbtmc_labtool C CXX ASM)
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
 
-if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    message(STATUS "  Diag: maximum debug info")
-    #I've set this to allow breakpoints on any source line
-    set(PICO_DEOPTIMIZED_DEBUG=1)
-endif ()
+project(pst_rtos C CXX ASM)
 
-
+# Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
-# include(FetchContent)
-# FetchContent_Declare(
-#         pico_scpi_usbtmc_lablib
-#         GIT_REPOSITORY https://github.com/jancumps/pico_scpi_usbtmc_lablib.git
-#         GIT_TAG master
-#         GIT_SUBMODULES_RECURSE FALSE
-# )
-# message("Downloading PICO SCPI USBTMC Lab Lib")
-# FetchContent_Populate(pico_scpi_usbtmc_lablib)
-
 pico_add_subdirectory(pico_scpi_usbtmc_lablib)
-
-add_compile_options(-Wall
-        -Wno-format          # int != int32_t as far as the compiler is concerned because gcc has int32_t as long int
-        -Wno-unused-function 
-        -Wno-maybe-uninitialized
-        )
-
 
 
 add_executable(${CMAKE_PROJECT_NAME}
@@ -63,24 +43,26 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}/source/pwm
 )
 
+pico_set_program_name(${CMAKE_PROJECT_NAME} ${CMAKE_PROJECT_NAME})
+pico_set_program_version(${CMAKE_PROJECT_NAME} "0.1")
+
+pico_enable_stdio_uart(${CMAKE_PROJECT_NAME} 0)
+pico_enable_stdio_usb(${CMAKE_PROJECT_NAME} 0)
+
 target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
         PICO_STDIO_STACK_BUFFER_SIZE=64 # use a small printf on stack buffer
+        PRIVATE SCPI_USER_CONFIG=1
 )
-
-target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC pico_stdlib 
-        FreeRTOS-Kernel 
+target_link_libraries(${CMAKE_PROJECT_NAME} pico_stdlib 
+        FreeRTOS-Kernel FreeRTOS-Kernel-Heap4 
         tinyusb_device tinyusb_board hardware_gpio hardware_adc 
         hardware_pwm hardware_i2c pico_unique_id
         pico_scpi_usbtmc_lablib
         )
 
-pico_set_linker_script(${CMAKE_PROJECT_NAME} ${CMAKE_SOURCE_DIR}/memmap_custom.ld)
+# TODO is this script multi-core safe?
+# pico_set_linker_script(${CMAKE_PROJECT_NAME} ${CMAKE_SOURCE_DIR}/memmap_custom.ld)
 
 pico_add_extra_outputs(${CMAKE_PROJECT_NAME})
 
-# enable use of scpi_user_config.h, to support custom device specific registers 
-target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE SCPI_USER_CONFIG=1)
 
-# usb output, uart output
- pico_enable_stdio_usb(${CMAKE_PROJECT_NAME} 0)
- pico_enable_stdio_uart(${CMAKE_PROJECT_NAME} 0)
