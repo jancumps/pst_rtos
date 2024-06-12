@@ -11,6 +11,8 @@ FreeRTOS Kernel
 Clone the repository with its subrepositories, to get the application, the Pico SCPI USBTMC_LabLib (PSL) sources, and the Jan Breuer SCPI library:  
 git clone https://github.com/jancumps/pst_rtos --recurse-submodules  
 
+It's also published as a github template. You can navigate to the [repo](https://github.com/jancumps/pst_rtos), and create your own project by using the github _Use this template_ options.
+
 Add this variable to your environment:  
 
     PICO_SDK_PATH (e.g.: C:/Users/jancu/Documents/Pico/pico-sdk)  
