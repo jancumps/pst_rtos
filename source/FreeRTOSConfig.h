@@ -135,5 +135,14 @@ to exclude the API function. */
 #define configUSE_PASSIVE_IDLE_HOOK             0
 #define portSUPPORT_SMP                         1
 
+/* pico2 specific */
+/* The following standard FreeRTOS ARM options are required for RP2350 */
+/* see portable/ThirdParty/Community-Supported-Ports/GCC/RP2350_ARM_NTZ/README.md */
+#define configENABLE_MPU                        0
+#define configENABLE_TRUSTZONE                  0
+#define configRUN_FREERTOS_SECURE_ONLY          1
+#define configENABLE_FPU                        1
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY    16
+
 #endif /* FREERTOS_CONFIG_H */
 
