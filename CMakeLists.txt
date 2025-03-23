@@ -5,11 +5,13 @@ cmake_minimum_required(VERSION 3.13)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
-# Pull in Raspberry Pi Pico SDK (must be before project)
-include(pico_sdk_import.cmake)
 
 #target board is pico2
 set(PICO_BOARD pico2)
+
+# Pull in Raspberry Pi Pico SDK (must be before project)
+include(pico_sdk_import.cmake)
+
 
 # Pull in FreeRTOS
 include(FreeRTOS_Kernel_import.cmake)

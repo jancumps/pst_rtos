@@ -135,5 +135,11 @@ to exclude the API function. */
 #define configUSE_PASSIVE_IDLE_HOOK             0
 #define portSUPPORT_SMP                         1
 
+/* pico2 specific */
+#define configENABLE_FPU 0
+#define configENABLE_MPU 0
+#define configENABLE_TRUSTZONE 0
+#define configMAX_SYSCALL_INTERRUPT_PRIORITY 8
+
 #endif /* FREERTOS_CONFIG_H */
 
