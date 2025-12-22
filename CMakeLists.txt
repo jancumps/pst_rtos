@@ -1,9 +1,28 @@
-cmake_minimum_required(VERSION 3.17)
-
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.28)
 
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 26)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fmodules-ts -fcommon -fno-rtti -fno-exceptions")
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(PICO_DEOPTIMIZED_DEBUG 1)
+
+# path to PICO utilities (if needed)
+if (NOT DEFINED ENV{PIOASM_DIR})
+        message("PIOASM: set PIOASM_DIR env variable if you use PIO")
+else()
+        message("PIOASM: PIOASM_DIR env variable is set to '$ENV{PIOASM_DIR}'")
+        set(pioasm_DIR $ENV{PIOASM_DIR})
+endif()
+if (NOT DEFINED ENV{PICOTOOL_DIR})
+        message("PICOTOOL: set PICOTOOL_DIR env variable if you create uf2 output with pico_add_extra_outputs()")
+else()
+        message("PICOTOOL: PICOTOOL_DIR env variable is set to '$ENV{PICOTOOL_DIR}'")
+        set(picotool_DIR $ENV{PICOTOOL_DIR})
+endif()
+
+set(PICO_PLATFORM rp2350-riscv CACHE STRING "Pico Platform")
+set(PICO_BOARD pico2 CACHE STRING "Board type")
 
 # uncomment if you use a different board than sdk default
 # set(PICO_BOARD pico2)
