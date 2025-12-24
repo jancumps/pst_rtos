@@ -21,13 +21,19 @@ else()
         set(picotool_DIR $ENV{PICOTOOL_DIR})
 endif()
 
-set(PICO_PLATFORM rp2350-riscv CACHE STRING "Pico Platform")
-set(PICO_BOARD pico2 CACHE STRING "Board type")
+if (DEFINED ENV{PICO_PLATFORM})
+        message("PICO_PLATFORM: PICO_PLATFORM env variable is set to '$ENV{PICO_PLATFORM}'")
+        set(PICO_PLATFORM $ENV{PICO_PLATFORM} CACHE STRING "Pico Platform")
+else()
+        message("PICO_PLATFORM: PICO_PLATFORM env variable is not set. Using default")
+endif()
 
-# uncomment if you use a different board than sdk default
-# set(PICO_BOARD pico2)
-# set(PICO_BOARD pico2_w)
-# set(PICO_BOARD seeed_xiao_rp2040)
+if (DEFINED ENV{PICO_BOARD})
+        message("PICO_BOARD: PICO_BOARD env variable is set to '$ENV{PICO_BOARD}'")
+        set(PICO_BOARD $ENV{PICO_BOARD} CACHE STRING "Board type")
+else()
+        message("PICO_BOARD: PICO_BOARD env variable is not set. Using default")
+endif()
 
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
@@ -87,6 +93,6 @@ target_link_libraries(${CMAKE_PROJECT_NAME} pico_stdlib
 # TODO is this script multi-core safe?
 # pico_set_linker_script(${CMAKE_PROJECT_NAME} ${CMAKE_SOURCE_DIR}/memmap_custom.ld)
 
-pico_add_extra_outputs(${CMAKE_PROJECT_NAME})
+# pico_add_extra_outputs(${CMAKE_PROJECT_NAME})
 
 
